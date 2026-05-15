@@ -102,3 +102,4 @@ http://127.0.0.1:5000
 - **Summary Dashboard** — Uses COUNT, AVG SQL aggregates to display live gym metrics
 # Gym Fitness App
  
+Updated by Soniya Sah
