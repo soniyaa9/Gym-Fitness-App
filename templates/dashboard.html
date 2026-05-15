@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2 class="mb-4"><i class="bi bi-speedometer2 text-warning"></i> Dashboard</h2>
+
+<!-- Summary Cards -->
+<div class="row g-4 mb-4">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary shadow">
+            <div class="card-body text-center">
+                <i class="bi bi-people fs-2"></i>
+                <h3 class="mt-2">{{ total_members }}</h3>
+                <p class="mb-0">Total Members</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success shadow">
+            <div class="card-body text-center">
+                <i class="bi bi-person-badge fs-2"></i>
+                <h3 class="mt-2">{{ total_trainers }}</h3>
+                <p class="mb-0">Total Trainers</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-warning shadow">
+            <div class="card-body text-center">
+                <i class="bi bi-calendar3 fs-2"></i>
+                <h3 class="mt-2">{{ total_classes }}</h3>
+                <p class="mb-0">Total Classes</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-info shadow">
+            <div class="card-body text-center">
+                <i class="bi bi-clock fs-2"></i>
+                <h3 class="mt-2">{{ avg_duration }} days</h3>
+                <p class="mb-0">Avg Membership Duration</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Most Popular Class + Membership Breakdown -->
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-dark text-white">
+                <i class="bi bi-trophy-fill text-warning"></i> Most Popular Class
+            </div>
+            <div class="card-body">
+                {% if popular_class %}
+                    <h4>{{ popular_class.class_name }}</h4>
+                    <p class="text-muted">{{ popular_class.total }} enrollments</p>
+                {% else %}
+                    <p>No enrollment data yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-dark text-white">
+                <i class="bi bi-pie-chart-fill text-info"></i> Membership Breakdown
+            </div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <thead><tr><th>Type</th><th>Count</th></tr></thead>
+                    <tbody>
+                        {% for row in membership_breakdown %}
+                        <tr>
+                            <td><span class="badge 
+                                {% if row.membership_type == 'premium' %}bg-warning text-dark
+                                {% elif row.membership_type == 'standard' %}bg-primary
+                                {% else %}bg-secondary{% endif %}">
+                                {{ row.membership_type | capitalize }}</span></td>
+                            <td>{{ row.total }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

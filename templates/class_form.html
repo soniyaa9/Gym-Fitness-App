@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+<div class="col-md-8">
+    <div class="card shadow">
+        <div class="card-header bg-dark text-white">
+            <h4 class="mb-0"><i class="bi bi-calendar-plus"></i> {{ action }} Class</h4>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                <div class="row g-3">
+                    <div class="col-md-8">
+                        <label class="form-label">Class Name *</label>
+                        <input type="text" name="class_name" class="form-control" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Room</label>
+                        <input type="text" name="room" class="form-control">
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label">Trainer *</label>
+                        <select name="trainer_id" class="form-select" required>
+                            <option value="">-- Select Trainer --</option>
+                            {% for t in trainers %}
+                            <option value="{{ t.trainer_id }}">
+                                {{ t.first_name }} {{ t.last_name }} — {{ t.speciality }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Date *</label>
+                        <input type="date" name="class_date" class="form-control" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Start Time *</label>
+                        <input type="time" name="start_time" class="form-control" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Duration (mins) *</label>
+                        <input type="number" name="duration_mins" class="form-control" min="1" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Max Capacity *</label>
+                        <input type="number" name="max_capacity" class="form-control" min="1" value="20" required>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-warning">
+                        <i class="bi bi-check-circle"></i> {{ action }} Class
+                    </button>
+                    <a href="{{ url_for('classes') }}" class="btn btn-secondary ms-2">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

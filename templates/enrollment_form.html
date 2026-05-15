@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row justify-content-center">
+<div class="col-md-7">
+    <div class="card shadow">
+        <div class="card-header bg-dark text-white">
+            <h4 class="mb-0"><i class="bi bi-journal-plus"></i> Enroll Member in Class</h4>
+        </div>
+        <div class="card-body">
+            <div class="alert alert-info">
+                <i class="bi bi-info-circle"></i>
+                Enrollment includes a <strong>capacity check</strong> — if the class is full, enrollment will be declined automatically.
+            </div>
+            <form method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Select Member *</label>
+                    <select name="member_id" class="form-select" required>
+                        <option value="">-- Select Member --</option>
+                        {% for m in members %}
+                        <option value="{{ m.member_id }}">
+                            {{ m.first_name }} {{ m.last_name }} ({{ m.membership_type }})
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Select Class *</label>
+                    <select name="class_id" class="form-select" required>
+                        <option value="">-- Select Class --</option>
+                        {% for c in classes %}
+                        <option value="{{ c.class_id }}">
+                            {{ c.class_name }} — {{ c.class_date }} {{ c.start_time }}
+                            ({{ c.trainer_first }} {{ c.trainer_last }})
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Attendance Status</label>
+                    <select name="attendance" class="form-select">
+                        <option value="registered">Registered</option>
+                        <option value="attended">Attended</option>
+                        <option value="no_show">No Show</option>
+                    </select>
+                </div>
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-info text-white">
+                        <i class="bi bi-check-circle"></i> Enroll Member
+                    </button>
+                    <a href="{{ url_for('enrollments') }}" class="btn btn-secondary ms-2">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}

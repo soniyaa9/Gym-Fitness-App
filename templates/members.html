@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-people text-primary"></i> Members</h2>
+    <a href="{{ url_for('add_member') }}" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> Add Member
+    </a>
+</div>
+
+<div class="card shadow">
+    <div class="card-body p-0">
+        <table class="table table-hover table-striped mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Membership</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Duration</th>
+                    <th>Trainer</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for m in members %}
+                <tr>
+                    <td>{{ m.member_id }}</td>
+                    <td>{{ m.first_name }} {{ m.last_name }}</td>
+                    <td>{{ m.email }}</td>
+                    <td>
+                        <span class="badge 
+                            {% if m.membership_type == 'premium' %}bg-warning text-dark
+                            {% elif m.membership_type == 'standard' %}bg-primary
+                            {% else %}bg-secondary{% endif %}">
+                            {{ m.membership_type | capitalize }}
+                        </span>
+                    </td>
+                    <td>{{ m.membership_start_date }}</td>
+                    <td>{{ m.membership_end_date }}</td>
+                    <td>{{ m.duration_days }} days</td>
+                    <td>
+                        {% if m.trainer_first %}
+                            {{ m.trainer_first }} {{ m.trainer_last }}
+                        {% else %}
+                            <span class="text-muted">None</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ url_for('edit_member', member_id=m.member_id) }}"
+                           class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <form action="{{ url_for('delete_member', member_id=m.member_id) }}"
+                              method="POST" class="d-inline"
+                              onsubmit="return confirm('Delete this member?')">
+                            <button class="btn btn-sm btn-outline-danger">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr><td colspan="9" class="text-center text-muted">No members found.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
