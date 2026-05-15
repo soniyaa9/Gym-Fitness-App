@@ -101,3 +101,4 @@ http://127.0.0.1:5000
 - **Data Validation** — Server-side validation on all forms (required fields, date logic, positive numbers)
 - **Summary Dashboard** — Uses COUNT, AVG SQL aggregates to display live gym metrics
 # Gym Fitness App
+ 
