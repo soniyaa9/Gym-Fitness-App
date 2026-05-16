@@ -4,11 +4,22 @@
 # ============================================================
 
 from flask import Flask, render_template, request, redirect, url_for, flash
+from flask_sqlalchemy import SQLAlchemy
 import mysql.connector
 from mysql.connector import Error
 from datetime import date
 
+# Create Flask app FIRST
 app = Flask(__name__)
+
+# Database configuration
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:YOUR_PASSWORD@localhost:3306/gym_db"
+
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+# Initialize SQLAlchemy
+db = SQLAlchemy(app)
+
 app.secret_key = 'gym_secret_key_2025'
 
 # ============================================================
@@ -18,7 +29,7 @@ def get_db():
     return mysql.connector.connect(
         host='localhost',
         user='root',         # change to your MySQL username
-        password='',         # change to your MySQL password
+        password='@KBssh34107',         
         database='gym_db'
     )
 
